@@ -84,7 +84,7 @@ export default {
 	watch: {
 		messages: {
 			handler(newValue, oldValue) {
-				console.log('newValue', newValue);
+				// console.log('newValue', newValue);
 				if(parseInt(newValue.unReadCount)>0){
 					uni.setTabBarBadge({
 						index: 1,

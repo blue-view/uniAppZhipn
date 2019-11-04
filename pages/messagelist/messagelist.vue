@@ -49,7 +49,7 @@ export default {
 	watch: {
 		messages: {
 			handler(newValue, oldValue) {
-				console.log('newValue', newValue);
+				// console.log('newValue', newValue);
 				let user = JSON.parse(uni.getStorageSync('UNIUSER'));
 				let userid = user._id;
 				let { chatMsgs, users, unReadCount } = newValue;
@@ -77,10 +77,13 @@ export default {
 		
 		showMsg(from,to) {
 			// debugger;
-			// console.log("from,to",{from,to});
+			console.log("from,to",{from,to});
 			this.msgRead({from,to});
+			let user = JSON.parse(uni.getStorageSync('UNIUSER'));
+			let userid = user._id;
+			let targetUserId=userid==from?to:from
 			uni.navigateTo({
-				url: '../message/message?targetUserId=' + from
+				url: '../message/message?targetUserId=' +targetUserId
 			});
 		},
 		/*

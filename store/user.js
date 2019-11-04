@@ -11,25 +11,31 @@ import {
 	RECEIVE_MSG,
 	MSG_READ,
 	MSG_SEND,
-	SOCKET_OPEN
+	SOCKET_OPEN,
+	INIT_SCOKET
 } from '../common/mutation-type.js'
 import {
 	getRedirectTo,
 	URL_BASE,
 	CACH_USER,
 	CACH_MESSAGE,
-	CACH_SOCKET
+	CACH_SOCKET,
+	URL_BASE_SERVER
 } from '../utils/index.js'
+import fetchApi from '../api/index.js'
 
 function initIO(userid, commit) {
 	// console.log('userid', userid);
 	// 1. 创建对象之前: 判断对象是否已经存在, 只有不存在才去创建
 	if (!io.socket) {
 		// 连接服务器, 得到与服务器的连接对象
-		io.socket = io('ws://49.233.86.85:4000') // 2. 创建对象之后: 保存对象
+		io.socket = io(`ws://${URL_BASE_SERVER}`) // 2. 创建对象之后: 保存对象
 		// 绑定监听, 接收服务器发送的消息
 		io.socket.on('receiveMsg', function(chatMsg) {
 			console.log('客户端接收服务器发送的消息', chatMsg)
+			// debugger;
+			userid=userid||JSON.parse(uni.getStorageSync(CACH_USER))._id;
+			// console.log("userid",userid);
 			if (userid === chatMsg.from || userid === chatMsg.to) {
 				commit(RECEIVE_MSG, {
 					chatMsg,
@@ -42,27 +48,6 @@ function initIO(userid, commit) {
 			initIO(userid, commit);
 		});
 	}
-}
-
-
-function wssInit() {
-	//建立连接
-	uni.connectSocket({
-		url: 'ws://localhost:4000' //app.appData.socket
-	})
-	//监听WebSocket连接打开事件。
-	uni.onSocketOpen(function(res) {
-		console.log('WebSocket连接已打开！');
-		uni.setStorageSync(SOCKET_OPEN, "open")
-	});
-	//监听WebSocket接受到服务器的消息事件。
-	uni.onSocketMessage(function(res) {
-		console.log('收到服务器内容：', res);
-	});
-	//监听WebSocket错误。
-	uni.onSocketError(function(res) {
-		console.log('WebSocket连接打开失败，请检查！', res)
-	});
 }
 
 export default {
@@ -89,21 +74,13 @@ export default {
 	getters: { //（可以认为是 store 的计算属性）
 		user: state => state.user,
 		userlist: state => state.userlist,
-		// messages: state => {
-		// 	let unReadCount=state.messages.unReadCount
-		// 	console.log(unReadCount);
-		// 	if (unReadCount>0) {
-		// 		uni.setTabBarBadge({
-		// 			index: 1,
-		// 			text: unReadCount + ''
-		// 		});
-		// 	}
-		// 	return state.messages;
-		// },
 		messages: state => state.messages,
 		message: state => state.message
 	},
 	mutations: {
+		[INIT_SCOKET](state,user){
+			state.user={...state.user,...user}
+		},
 		[AUTH_SUCCESS](state, playload) {
 			const {
 				type,
@@ -223,37 +200,33 @@ export default {
 			state
 		}, user) {
 			return new Promise((resolve, reject) => {
-				uni.request({
-					url: URL_BASE + '/login',
-					method: 'POST',
-					data: user,
-					success: res => {
-						let {
-							data
-						} = res;
-						if (data.code) {
-							commit(ERROR_MSG, data.msg)
-						} else {
-							// debugger;
-							try {
-								uni.setStorageSync(CACH_USER, JSON.stringify(data.data));
-								commit(AUTH_SUCCESS, data.data)
-								resolve(data.data._id)
-								uni.switchTab({
-									url: '../main/main'
-								});
+				fetchApi({
+					url: "/login",
+					params: user,
+					method: 'POST'
+				}).then((res) => {
+					let {
+						data
+					} = res;
+					if (data.code) {
+						commit(ERROR_MSG, data.msg)
+					} else {
+						// debugger;
+						try {
+							uni.setStorageSync(CACH_USER, JSON.stringify(data.data));
+							commit(AUTH_SUCCESS, data.data)
+							resolve(data.data._id)
+							uni.switchTab({
+								url: '../main/main'
+							});
 
-							} catch (e) {
-								// error
-								console.log(e);
-							}
+						} catch (e) {
+							// error
+							console.log(e);
 						}
-					},
-					fail: () => {},
-					complete: () => {}
-				});
-
-			});
+					}
+				})
+			})
 		},
 		errorMsg({
 			commit,
@@ -269,43 +242,39 @@ export default {
 			commit
 		}, user) {
 			return new Promise((resolve, reject) => {
-				uni.request({
-					url: URL_BASE + '/register',
-					method: 'POST',
-					data: user,
-					success: res => {
-						let {
-							data
-						} = res;
-						// console.log("reg:" + data.data);
-						if (data.code) {
-							commit(ERROR_MSG, data.msg)
-						} else {
-							try {
-								// debugger;
-								uni.setStorageSync(CACH_USER, JSON.stringify(data.data));
-								commit(AUTH_SUCCESS, data.data)
-								resolve(data.data._id)
+				fetchApi({
+					url: "/register",
+					params: user,
+					method: 'POST'
+				}).then((res) => {
+					let {
+						data
+					} = res;
+					if (data.code) {
+						commit(ERROR_MSG, data.msg)
+					} else {
+						try {
+							// debugger;
+							uni.setStorageSync(CACH_USER, JSON.stringify(data.data));
+							commit(AUTH_SUCCESS, data.data)
+							resolve(data.data._id)
 
-								if (data.data.type == "laoban") {
-									uni.reLaunch({
-										url: '../laoban/laoban?path=reg'
-									})
-								} else if (data.data.type == 'dashen') {
-									uni.reLaunch({
-										url: '../dashen/dashen?path=reg'
-									})
-								}
-
-							} catch (e) {
-								// error
-								console.log(e);
+							if (data.data.type == "laoban") {
+								uni.reLaunch({
+									url: '../laoban/laoban?path=reg'
+								})
+							} else if (data.data.type == 'dashen') {
+								uni.reLaunch({
+									url: '../dashen/dashen?path=reg'
+								})
 							}
+
+						} catch (e) {
+							console.log(e);
 						}
-					},
-					fail: () => {},
-					complete: () => {}
-				});
+					}
+
+				})
 			});
 		},
 		/**
@@ -315,39 +284,43 @@ export default {
 			state,
 			commit
 		}, user) {
-			uni.request({
-				url: URL_BASE + '/update',
-				method: 'POST',
-				data: user,
-				success: res => {
-					let {
-						data
-					} = res;
-					if (data.code) {
-						commit(ERROR_MSG, data.msg)
-					} else {
-						try {
-							commit(AUTH_SUCCESS, data.data)
-							// console.log('更新用户', data);
-							uni.setStorageSync(CACH_USER, JSON.stringify(data.data));
-							if (user.path == 'reg') {
-								uni.switchTab({
-									url: '../main/main'
-								});
-							} else {
-								uni.reLaunch({
-									url: '../person/person'
-								})
-							}
-
-						} catch (e) {
-							// error
+			fetchApi({
+				url: "/update",
+				params: user,
+				method: 'POST'
+			}).then((res) => {
+				let {
+					data
+				} = res;
+				// console.log("res",res)
+				if (data.code) {
+					commit(ERROR_MSG, data.msg)
+					uni.showToast({
+						title:data.msg
+					})
+					uni.reLaunch({
+						url:'../login/login'
+					})
+				} else {
+					try {
+						commit(AUTH_SUCCESS, data.data)
+						// console.log('更新用户', data);
+						uni.setStorageSync(CACH_USER, JSON.stringify(data.data));
+						if (user.path == 'reg') {
+							uni.switchTab({
+								url: '../main/main'
+							});
+						} else {
+							uni.reLaunch({
+								url: '../person/person'
+							})
 						}
+
+					} catch (e) {
+						// error
 					}
-				},
-				fail: () => {},
-				complete: () => {}
-			});
+				}
+			})
 		},
 		/**
 		 * 用户信息列表
@@ -357,30 +330,26 @@ export default {
 			commit
 		}, type) {
 			commit(RESET_USER_LIST, [])
-			uni.request({
-				url: URL_BASE + '/userlist',
-				method: 'GET',
-				data: {
+			fetchApi({
+				url: "/userlist",
+				params: {
 					type
 				},
-				success: res => {
-					let {
-						data
-					} = res;
-					if (data.code) {
-						commit(ERROR_MSG, data.msg)
-					} else {
-						try {
-							// console.log(data.data);
-							commit(RECEIVE_USER_LIST, data.data)
-						} catch (e) {
-							// error
-						}
+				method: 'GET'
+			}).then((res) => {
+				let {
+					data
+				} = res;
+				if (data.code) {
+					commit(ERROR_MSG, data.msg)
+				} else {
+					try {
+						commit(RECEIVE_USER_LIST, data.data)
+					} catch (e) {
+						// error
 					}
-				},
-				fail: () => {},
-				complete: () => {}
-			});
+				}
+			})
 		},
 		/**
 		 *清空用户信息 
@@ -407,28 +376,30 @@ export default {
 			state,
 			commit
 		}) {
-			uni.request({
-				url: URL_BASE + '/user',
-				method: 'GET',
-				data: {},
-				success: res => {
-					let {
-						data
-					} = res;
-					if (data.code) {
-						commit(ERROR_MSG, data.msg)
-					} else {
-						try {
-							console.log("user:", data.data);
-							commit(RECEIVE_USER, data.data)
-						} catch (e) {
-							// error
-						}
+			fetchApi({
+				url: "/user",
+				method: 'GET'
+			}).then((res) => {
+				let {
+					data
+				} = res;
+				if (data.code) {
+					commit(ERROR_MSG, data.msg)
+					uni.showToast({
+						title:data.msg
+					})
+					uni.reLaunch({
+						url:'../login/login'
+					})
+				} else {
+					try {
+						// console.log("user:", data.data);
+						commit(RECEIVE_USER, data.data)
+					} catch (e) {
+						// error
 					}
-				},
-				fail: () => {},
-				complete: () => {}
-			});
+				}
+			})
 		},
 		/**
 		 * 更新头像
@@ -447,32 +418,26 @@ export default {
 			commit
 		}, userid) {
 			initIO(userid, commit)
-			// wssInit();
-			uni.request({
-				url: URL_BASE + '/msglist',
-				method: 'GET',
-				data: {},
-				success: res => {
-					let {
-						data
-					} = res;
-					if (data.code) {
-						commit(ERROR_MSG, data.msg)
-					} else {
-						try {
-							// debugger;
-							commit(RECEIVE_MSG_LIST, { ...data.data,
-								userid
-							})
-
-						} catch (e) {
-							// error
-						}
+			fetchApi({
+				url: "/msglist",
+				method: 'GET'
+			}).then((res) => {
+				let {
+					data
+				} = res;
+				if (data.code) {
+					commit(ERROR_MSG, data.msg)
+				} else {
+					try {
+						// debugger;
+						commit(RECEIVE_MSG_LIST, { ...data.data,
+							userid
+						})
+					} catch (e) {
+						// error
 					}
-				},
-				fail: () => {},
-				complete: () => {}
-			});
+				}
+			})
 		},
 
 		receiveMsg({
@@ -498,9 +463,9 @@ export default {
 			to,
 			content
 		}) {
-			// console.log(from);
-			// initIO(from,commit)
+			// console.log('from,to,',{from,to});
 			if (from != to) {
+				// console.log('客户端发消息给服务端', chatMsg)
 				io.socket.emit('sendMsg', {
 					from,
 					to,
@@ -522,33 +487,34 @@ export default {
 			from,
 			to
 		}) {
-
-			uni.request({
-				url: URL_BASE + '/readmsg',
+			fetchApi({
+				url: "/readmsg",
 				method: 'POST',
-				data: {
+				params: {
 					from
-				},
-				success: res => {
-					try {
-						// debugger;
-						const result = res.data
-						if (result.code === 0) {
-							const count = result.data
-							commit(MSG_READ, {
-								count,
-								from,
-								to
-							})
-						}
-					} catch (e) {
-						// error
-						console.log("e", e);
+				}
+			}).then((res) => {
+				try {
+					// debugger;
+					const result = res.data
+					if (result.code === 0) {
+						const count = result.data
+						commit(MSG_READ, {
+							count,
+							from,
+							to
+						})
 					}
-				},
-				fail: () => {},
-				complete: () => {}
-			});
+				} catch (e) {
+					// error
+					console.log("e", e);
+				}
+			})
+		}
+		,
+		initScoket({state,commit},data){
+			initIO(data._id,commit)
+			// commit(INIT_SCOKET,data)
 		}
 	}
 }

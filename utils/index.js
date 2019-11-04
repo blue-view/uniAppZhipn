@@ -30,7 +30,8 @@ export function getRedirectTo(type, header) {
 	return path
 }
 
-export const URL_BASE = '/api';
+export const URL_BASE = '/uniAppZhipinApi';
+export const URL_BASE_SERVER = '49.233.86.85:4000';
 export const CACH_USER = 'UNIUSER';
 export const CACH_LASTMSG = 'CACH_LASTMSG';
 export const CACH_MESSAGE = "CACH_MESSAGE"

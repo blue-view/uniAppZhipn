@@ -4,7 +4,8 @@
 			<view class="message_head">
 				<block v-for="msg in msgs" :key="msg._id">
 					<view class="m_list_item1 m_list_item" v-if="targetId === msg.from">
-						<image class="m_cls" :src="'../../static/images/' + users[targetId].header + '.png'" mode=""></image>
+						<image v-if="users[targetId]" class="m_cls" :src="'../../static/images/' + users[targetId].header + '.png'" mode=""></image>
+						<image v-else class="m_cls" src="../../static/images/头像1.png" mode=""></image>
 						<view class="m_content">{{ msg.content }}</view>
 					</view>
 					<view class="m_list_item2 m_list_item" v-else>
@@ -66,7 +67,6 @@ export default {
 	},
 	onLoad(option) {
 		this.targetId = option.targetUserId;
-		console.log(this.targetId);
 		this.loadMsg(this.messages);
 		this.emojis = [
 			'😀',
@@ -141,6 +141,7 @@ export default {
 			// debugger;
 			if (!uni.getStorageSync(CACH_MESSAGE) && messages.chatMsgs.length == 0) return;
 			let { users, chatMsgs, unReadCount } = messages.chatMsgs.length > 0 ? messages : JSON.parse(uni.getStorageSync(CACH_MESSAGE));
+			
 			let user = this.user.username ? this.user : JSON.parse(uni.getStorageSync(CACH_USER));
 			this.users = users;
 
@@ -158,6 +159,7 @@ export default {
 			}
 			const chatId = [meId, this.targetId].sort().join('_');
 			this.msgs = chatMsgs.filter(msg => msg.chat_id === chatId);
+			// console.log('this.msgs',this.msgs)
 		},
 		sendChat(event) {
 			const user = JSON.parse(uni.getStorageSync(CACH_USER));

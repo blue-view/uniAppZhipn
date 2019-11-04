@@ -13,3 +13,4 @@ export const MSG_READ = 'msg_read' // 查看过了某个聊天消息
 export const RECEIVE_HEADER = 'receive_header' // 查看过了某个聊天消息
 export const MSG_SEND="msg_send"
 export const SOCKET_OPEN="socket_open"
+export const INIT_SCOKET="init_scoket"

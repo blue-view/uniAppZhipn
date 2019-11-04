@@ -50,7 +50,7 @@ export default {
 		...mapGetters(['user'])
 	},
 	methods: {
-		...mapActions(['register', 'errorMsg']),
+		...mapActions(['register', 'errorMsg',"getMsgList"]),
 		formSubmit(e) {
 			console.log(e);
 			const { username, password, password2, type } = e.detail.value;
@@ -61,7 +61,10 @@ export default {
 			} else if (password !== password2) {
 				this.errorMsg('两次密码不一致');
 			} else {
-				this.register(e.detail.value);
+				this.register(e.detail.value).then((res)=>{
+					console.log('res',res);
+					this.getMsgList(res)
+				});
 			}
 		},
 		radioChange() {}

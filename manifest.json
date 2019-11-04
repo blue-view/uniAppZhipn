@@ -91,12 +91,12 @@
 			"port": 8002,
 			"disableHostCheck": true,
 			"proxy": {
-				"/api": {
+				"/uniAppZhipinApi": {
 					"target": "http://49.233.86.85:4000/",
 					"changeOrigin": true,
 					"ws": true,
 					"pathRewrite": {
-						"^/api": ""
+						"^/uniAppZhipinApi": ""
 					}
 				}
 			}

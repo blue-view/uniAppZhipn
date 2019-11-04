@@ -3,7 +3,7 @@
 		{
 			"path": "pages/main/main",
 			"style": {
-				"enablePullDownRefresh":true
+				// "enablePullDownRefresh":true
 			}
 		},
 
