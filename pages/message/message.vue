@@ -5,7 +5,7 @@
 				<block v-for="msg in msgs" :key="msg._id">
 					<view class="m_list_item1 m_list_item" v-if="targetId === msg.from">
 						<image v-if="users[targetId]" class="m_cls" :src="'../../static/images/' + users[targetId].header + '.png'" mode=""></image>
-						<image v-else class="m_cls" src="../../static/images/头像1.png" mode=""></image>
+						<image v-else class="m_cls" src="../../static/images/header1.png" mode=""></image>
 						<view class="m_content">{{ msg.content }}</view>
 					</view>
 					<view class="m_list_item2 m_list_item" v-else>

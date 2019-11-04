@@ -8,7 +8,7 @@
 			<uni-grid :hor="35" :ver="-45" :show-border="false" :square="false" :column="5" :highlight="true" @change="change">
 				<uni-grid-item :class="item.text == selectedIcon ? 'selectedColor' : ''" v-for="(item, index) in headerList" :key="index">
 					<image :src="item.icon" class="v_image" mode="aspectFill" />
-					<text class="grid_text">{{ item.text }}</text>
+					<text class="grid_text">{{ item.textzw }}</text>
 				</uni-grid-item>
 			</uni-grid>
 		</view>
@@ -45,8 +45,9 @@ export default {
 		this.path = option.path;
 		for (let i = 0; i < 20; i++) {
 			this.headerList.push({
-				text: '头像' + (i + 1),
-				icon: `../../static/images/头像${i + 1}.png` // 不能使用import
+				textzw: '头像' + (i + 1),
+				text: 'header' + (i + 1),
+				icon: `../../static/images/header${i + 1}.png` // 不能使用import
 			});
 		}
 		this.getUser();
