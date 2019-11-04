@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<scroll-view scroll-y="true" :style="{ height: scrollH + 'upx' }">
 		<uni-card mode="basic">
 			<view class="p_container_user">
 				<image class="p_user" :src="'../../static/images/' + user.header + '.png'" mode=""></image>
@@ -25,7 +25,7 @@
 		</uni-card>
 		<view class="v_button"><button type="primary" @click="updateInfo">更新信息</button></view>
 		<view class="v_button"><button type="warn" @click="louginOut">退出登录</button></view>
-	</view>
+	</scroll-view>
 </template>
 
 <script>
@@ -37,7 +37,15 @@ export default {
 		return {};
 	},
 	computed: {
-		...mapGetters(['user', 'messages'])
+		...mapGetters(['user', 'messages']),
+		scrollH: function() {
+			let sys = uni.getSystemInfoSync();
+			let winWidth = sys.windowWidth;
+			let winrate = 750 / winWidth;
+			let winHeight = parseInt(sys.windowHeight * winrate);
+			// console.log(winHeight);
+			return winHeight;
+		}
 	},
 	components: {
 		uniCard
@@ -159,5 +167,7 @@ export default {
 }
 .v_button {
 	margin-top: 18upx;
+	padding:0 30upx;
+	box-sizing: border-box;
 }
 </style>

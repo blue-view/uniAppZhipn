@@ -1,20 +1,22 @@
 <template>
-	<view class="container">
-		<view class="v_imagecls"><image class="logo-img " src="../../static/logo.png" mode=""></image></view>
-		<form @submit="formSubmit" class="v_form">
-			<view class="error-msg" v-if="user.msg">{{ user.msg }}</view>
-			<view class="v_line v_line_entity">
-				<label>用户名：</label>
-				<input class="v_input " name="username" type="text" value="" placeholder="请输入用户名" />
-			</view>
-			<view class="v_line v_line_entity">
-				<label>密 码：</label>
-				<input class="v_input" name="password" value="" password="true" placeholder="请输入密码" />
-			</view>
-			<button class="v_line v_button" type="primary" form-type="submit">登录</button>
-			<view class=" v_text"><navigator open-type="reLaunch" url="../register/register">还没有账户</navigator></view>
-		</form>
-	</view>
+	<scroll-view scroll-y="true" :style="{ height: scrollH + 'upx' }">
+		<view class="container">
+			<view class="v_imagecls"><image class="logo-img " src="../../static/logo.png" mode=""></image></view>
+			<form @submit="formSubmit" class="v_form">
+				<view class="error-msg" v-if="user.msg">{{ user.msg }}</view>
+				<view class="v_line v_line_entity">
+					<label>用户名：</label>
+					<input class="v_input" cursor-spacing="140" name="username" type="text" value="" placeholder="请输入用户名" />
+				</view>
+				<view class="v_line v_line_entity">
+					<label>密 码：</label>
+					<input class="v_input" cursor-spacing="140" name="password" value="" password="true" placeholder="请输入密码" />
+				</view>
+				<button class="v_line v_button" type="primary" form-type="submit">登录</button>
+				<view class=" v_text"><navigator open-type="reLaunch" url="../register/register">还没有账户</navigator></view>
+			</form>
+		</view>
+	</scroll-view>
 </template>
 
 <script>
@@ -22,7 +24,15 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
 	name: 'login',
 	computed: {
-		...mapGetters(['user'])
+		...mapGetters(['user']),
+		scrollH: function() {
+			let sys = uni.getSystemInfoSync();
+			let winWidth = sys.windowWidth;
+			let winrate = 750 / winWidth;
+			let winHeight = parseInt(sys.windowHeight * winrate);
+			// console.log(winHeight);
+			return winHeight;
+		}
 	},
 	data() {
 		return {};
@@ -42,9 +52,9 @@ export default {
 			} else if (!password) {
 				this.errorMsg('密码不能为空');
 			} else {
-				this.login({ username, password }).then((res)=>{
-					console.log('res',res);
-					this.getMsgList(res)
+				this.login({ username, password }).then(res => {
+					console.log('res', res);
+					this.getMsgList(res);
 				});
 			}
 		}

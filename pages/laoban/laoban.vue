@@ -142,5 +142,7 @@ export default {
 }
 .v_button {
 	/* margin-top: 20upx; */
+	margin:0 30upx 30upx 30upx;
+	box-sizing: border-box;
 }
 </style>

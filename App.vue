@@ -38,5 +38,6 @@ page {
 	height: 100%;
 	width: 100%;
 	background: #f5f5f9;
+	
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+	<scroll-view scroll-y="true" :style="{ height: scrollH + 'upx' }">
 	<view class="container">
 		<view class="v_imagecls"><image class="logo-img " src="../../static/logo.png" mode=""></image></view>
 		<form @submit="formSubmit" class="v_form">
@@ -34,6 +35,7 @@
 			<view class=" v_text"><navigator open-type="reLaunch" url="../login/login">已有账户</navigator></view>
 		</form>
 	</view>
+	</scroll-view>
 </template>
 
 <script>
@@ -47,7 +49,15 @@ export default {
 		this.errorMsg('')
 	},
 	computed: {
-		...mapGetters(['user'])
+		...mapGetters(['user']),
+		scrollH: function() {
+			let sys = uni.getSystemInfoSync();
+			let winWidth = sys.windowWidth;
+			let winrate = 750 / winWidth;
+			let winHeight = parseInt(sys.windowHeight * winrate);
+			// console.log(winHeight);
+			return winHeight;
+		}
 	},
 	methods: {
 		...mapActions(['register', 'errorMsg',"getMsgList"]),

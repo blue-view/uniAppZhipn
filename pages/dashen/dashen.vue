@@ -59,7 +59,7 @@ export default {
 			let winWidth = sys.windowWidth;
 			let winrate = 750 / winWidth;
 			let winHeight = parseInt(sys.windowHeight * winrate);
-			console.log('winHeight:'+winHeight);
+			console.log('winHeight:' + winHeight);
 			return winHeight;
 		}
 	},
@@ -136,5 +136,7 @@ export default {
 }
 .v_button {
 	/* margin-top: 20upx; */
+	margin:0 30upx 30upx 30upx;
+	box-sizing: border-box;
 }
 </style>
