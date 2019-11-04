@@ -1,0 +1,84 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/main/main",
+			"style": {
+				"enablePullDownRefresh":true
+			}
+		},
+
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {}
+		}
+
+	    ,{
+            "path" : "pages/dashen/dashen",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/laoban/laoban",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/person/person",
+            "style" : {
+				"navigationBarTitleText": "用户中心"
+			}
+        }
+        ,{
+            "path" : "pages/personList/personList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/messagelist/messagelist",
+            "style" : {
+				"navigationBarTitleText": "消息列表"
+			}
+        }
+        ,{
+            "path" : "pages/message/message",
+            "style" : {}
+        }
+       
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "硅谷直聘",
+		"navigationBarBackgroundColor": "#007aff",
+		"backgroundColor": "#007aff"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#3cc51f",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/main/main",
+	        "iconPath": "static/images/foot/dashen.png",
+	        "selectedIconPath": "static/images/foot/dashen-selected.png",
+	        "text": "大神"
+	    }, {
+	        "pagePath": "pages/messagelist/messagelist",
+	        "iconPath": "static/images/foot/message.png",
+	        "selectedIconPath": "static/images/foot/message-selected.png",
+	        "text": "消息"
+	    }
+		, {
+		    "pagePath": "pages/person/person",
+		    "iconPath": "static/images/foot/personal.png",
+		    "selectedIconPath": "static/images/foot/personal-selected.png",
+		    "text": "个人"
+		}]
+	}
+}
