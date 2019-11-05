@@ -34,7 +34,7 @@ export default {
 <style>
 /*每个页面公共css */
 page {
-	position: fixed;
+	/* position: fixed; */
 	height: 100%;
 	width: 100%;
 	background: #f5f5f9;

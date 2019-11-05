@@ -54,9 +54,13 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "硅谷直聘",
+		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#007aff",
-		"backgroundColor": "#007aff"
+		"backgroundColor": "#007aff",
+		"app-plus": {
+			"softinputMode": "adjustResize",
+			"softinputNavBar": "none"
+		}
 	},
 	"tabBar": {
 	    "color": "#7A7E83",
