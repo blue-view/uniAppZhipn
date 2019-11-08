@@ -55,6 +55,16 @@ export default {
 			usertype: ''
 		};
 	},
+	onLoad() {
+		let user = JSON.parse(uni.getStorageSync('UNIUSER'));
+		console.log(user);
+		this.getMsgList(user._id);
+	},
+	onShow() {
+		let user = JSON.parse(uni.getStorageSync('UNIUSER'));
+		console.log(user);
+		this.getMsgList(user._id);
+	},
 	components: { uniCard },
 	computed: {
 		...mapGetters(['userlist','messages']),
@@ -97,13 +107,14 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['getUserList',"msgRead"]),
+		...mapActions(['getUserList',"msgRead","getMsgList"]),
 		sendChat(targetUserId){
 			console.log('targetUserId=',targetUserId);
 			let userStr=uni.getStorageSync(CACH_USER)
 			
 			if(userStr){
 				this.msgRead({from:targetUserId,to:JSON.parse(userStr)._id})
+				
 				uni.navigateTo({
 					url: '../message/message?targetUserId=' + targetUserId
 				});

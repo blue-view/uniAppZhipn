@@ -24,11 +24,15 @@
 
 	    ,{
             "path" : "pages/dashen/dashen",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "大神信息"
+            }
         }
         ,{
             "path" : "pages/laoban/laoban",
-            "style" : {}
+          "style" : {
+          	"navigationBarTitleText": "老板信息"
+          }
         }
         ,{
             "path" : "pages/person/person",
@@ -54,7 +58,7 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "直聘",
 		"navigationBarBackgroundColor": "#007aff",
 		"backgroundColor": "#007aff",
 		"app-plus": {

@@ -1,31 +1,33 @@
 <template>
-	<scroll-view scroll-y="true" :style="{ height: scrollH + 'upx' }">
-		<uni-card mode="basic">
-			<view class="p_container_user">
-				<image class="p_user" :src="'../../static/images/' + user.header + '.png'" mode=""></image>
-				<label class="p_text">{{ user.username }}</label>
-			</view>
-		</uni-card>
-		<view class="uni-card__header2">相关信息</view>
-		<uni-card mode="basic">
-			<view class="v_pos_tainer">
-				<view class="v_personinfo">
-					<label>职位：</label>
-					<text>{{ user.post }}</text>
+	<view class="personContainer">
+		<scroll-view scroll-y="true" :style="{ height: scrollH + 'upx' }">
+			<uni-card mode="basic">
+				<view class="p_container_user">
+					<image class="p_user" :src="'../../static/images/' + user.header + '.png'" mode=""></image>
+					<label class="p_text">{{ user.username }}</label>
 				</view>
-				<view class="v_personinfo">
-					<label>简介：</label>
-					<text>{{ user.info }}</text>
+			</uni-card>
+			<view class="uni-card__header2">相关信息</view>
+			<uni-card mode="basic">
+				<view class="v_pos_tainer">
+					<view class="v_personinfo">
+						<label>职位：</label>
+						<text>{{ user.post }}</text>
+					</view>
+					<view class="v_personinfo">
+						<label>简介：</label>
+						<text>{{ user.info }}</text>
+					</view>
+					<view class="v_personinfo" v-if="user.type == 'laoban'">
+						<label>薪酬：</label>
+						<text>{{ user.salary }}</text>
+					</view>
 				</view>
-				<view class="v_personinfo" v-if="user.type == 'laoban'">
-					<label>薪酬：</label>
-					<text>{{ user.salary }}</text>
-				</view>
-			</view>
-		</uni-card>
-		<view class="v_button"><button type="primary" @click="updateInfo">更新信息</button></view>
-		<view class="v_button"><button type="warn" @click="louginOut">退出登录</button></view>
-	</scroll-view>
+			</uni-card>
+			<view class="v_button"><button type="primary" @click="updateInfo">更新信息</button></view>
+			<view class="v_button"><button type="warn" @click="louginOut">退出登录</button></view>
+		</scroll-view>
+	</view>
 </template>
 
 <script>
@@ -43,7 +45,6 @@ export default {
 			let winWidth = sys.windowWidth;
 			let winrate = 750 / winWidth;
 			let winHeight = parseInt(sys.windowHeight * winrate);
-			// console.log(winHeight);
 			return winHeight;
 		}
 	},
@@ -93,16 +94,15 @@ export default {
 		messages: {
 			handler(newValue, oldValue) {
 				// console.log('newValue', newValue);
-				if(parseInt(newValue.unReadCount)>0){
+				if (parseInt(newValue.unReadCount) > 0) {
 					uni.setTabBarBadge({
 						index: 1,
 						text: newValue.unReadCount + ''
 					});
-				}
-				else{
+				} else {
 					uni.removeTabBarBadge({
-						index:1
-					})
+						index: 1
+					});
 				}
 			},
 			deep: true
@@ -116,8 +116,8 @@ export default {
 			});
 		} else {
 			uni.removeTabBarBadge({
-				index:1
-			})
+				index: 1
+			});
 		}
 	}
 };
@@ -167,7 +167,12 @@ export default {
 }
 .v_button {
 	margin-top: 18upx;
-	padding:0 30upx;
+	padding: 0 30upx;
 	box-sizing: border-box;
+}
+.personContainer{
+	position: fixed;
+	width: 100%;
+	height: 100%;
 }
 </style>

@@ -1,0 +1,59 @@
+
+.p_container_user.data-v-75457923 {
+	margin-top: 100rpx;
+	margin-bottom: 100rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+}
+.p_user.data-v-75457923 {
+	width: 100rpx;
+	height: 100rpx;
+}
+.p_text.data-v-75457923 {
+	margin-top: 40rpx;
+}
+.uni-card.data-v-75457923 {
+	margin-left: 0rpx;
+	margin-right: 0rpx;
+}
+.uni-card__header2.data-v-75457923 {
+	padding: 30rpx 30rpx 18rpx 30rpx;
+	font-size: 14px;
+	color: #888;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: #f5f5f9;
+}
+.v_personinfo.data-v-75457923 {
+	color: #888;
+	font-size: 15px;
+	line-height: 44rpx;
+	margin-top: 12rpx;
+	width: auto;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.v_pos_tainer.data-v-75457923 {
+	padding: 25rpx 30rpx 25rpx 0;
+}
+.v_button.data-v-75457923 {
+	margin-top: 18rpx;
+	padding:0 30rpx;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+

@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/index/index",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/dashen/dashen",
+    "pages/laoban/laoban",
+    "pages/person/person",
+    "pages/personList/personList",
+    "pages/messagelist/messagelist",
+    "pages/message/message"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#007aff",
+    "backgroundColor": "#007aff",
+    "softinputMode": "adjustResize",
+    "softinputNavBar": "none"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "iconPath": "static/images/foot/dashen.png",
+        "selectedIconPath": "static/images/foot/dashen-selected.png",
+        "text": "大神"
+      },
+      {
+        "pagePath": "pages/messagelist/messagelist",
+        "iconPath": "static/images/foot/message.png",
+        "selectedIconPath": "static/images/foot/message-selected.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/person/person",
+        "iconPath": "static/images/foot/personal.png",
+        "selectedIconPath": "static/images/foot/personal-selected.png",
+        "text": "个人"
+      }
+    ]
+  },
+  "nvueCompiler": "uni-app",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "uni-zhipin",
+  "compilerVersion": "2.3.7",
+  "usingComponents": {}
+}

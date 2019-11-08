@@ -16,7 +16,9 @@ export default function fetchApi({
 	url = URL_BASE + url
 	type = type || ''
 	method = method || 'GET'
-	
+	uni.showLoading({
+		title:"加载中..."
+	})
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: `${url}/${type}`,
@@ -28,6 +30,7 @@ export default function fetchApi({
 				reject(e)
 			},
 			complete: () => {
+				uni.hideLoading()
 				complete && complete();
 			}
 		})

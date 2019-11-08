@@ -68,7 +68,7 @@ export default {
 		message: {
 			from: "",
 			to: "",
-			cotent: ""
+			content: ""
 		}
 	},
 	getters: { //（可以认为是 store 的计算属性）
@@ -155,6 +155,7 @@ export default {
 			count
 		}) {
 			// debugger;
+			
 			state.messages.chatMsgs.forEach(msg => {
 				if (msg.from === from && msg.to === to && !msg.read) {
 					msg.read = true
@@ -175,7 +176,6 @@ export default {
 				chatMsgs,
 				unReadCount
 			}
-
 			uni.setStorageSync(CACH_MESSAGE, JSON.stringify(state.messages))
 		},
 		[MSG_SEND](state, {

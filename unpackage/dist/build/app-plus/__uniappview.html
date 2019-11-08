@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8" />
+        <script>
+            var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+                CSS.supports('top: constant(a)'))
+            document.write(
+                '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+                (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+        </script>
+        <title>View</title>
+        <style>
+            * {
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            input[type="search"]::-webkit-search-cancel-button {
+                display: none;
+            }
+        </style>
+        <script>
+            var __wxConfig = {"debug":false,"appname":"uni-zhipin","entryPagePath":"pages/main/main.html","page":{"pages/main/main.html":{"window":{"usingComponents":{"person-list":"/pages/personList/personList"}}},"pages/index/index.html":{"window":{"navigationBarTitleText":"uni-app","usingComponents":{}}},"pages/login/login.html":{"window":{"usingComponents":{}}},"pages/register/register.html":{"window":{"usingComponents":{}}},"pages/dashen/dashen.html":{"window":{"usingComponents":{"uni-grid":"/components/uni-grid/uni-grid","uni-grid-item":"/components/uni-grid-item/uni-grid-item"}}},"pages/laoban/laoban.html":{"window":{"usingComponents":{"uni-grid":"/components/uni-grid/uni-grid","uni-grid-item":"/components/uni-grid-item/uni-grid-item"}}},"pages/person/person.html":{"window":{"navigationBarTitleText":"用户中心","usingComponents":{"uni-card":"/components/uni-card/uni-card"}}},"pages/personList/personList.html":{"window":{"usingComponents":{"uni-card":"/components/uni-card/uni-card"}}},"pages/messagelist/messagelist.html":{"window":{"navigationBarTitleText":"消息列表","usingComponents":{"uni-list":"/components/uni-list/uni-list","uni-list-item":"/components/uni-list-item/uni-list-item"}}},"pages/message/message.html":{"window":{"usingComponents":{"uni-icons":"/components/uni-icons/uni-icons","uni-grid":"/components/uni-grid/uni-grid","uni-grid-item":"/components/uni-grid-item/uni-grid-item"}}}},"global":{"window":{"navigationBarTextStyle":"white","navigationBarTitleText":"uni-app","navigationBarBackgroundColor":"#007aff","backgroundColor":"#007aff","softinputMode":"adjustResize","softinputNavBar":"none"}},"tabBar":{"color":"#7A7E83","selectedColor":"#3cc51f","backgroundColor":"#ffffff","borderStyle":"black","list":[{"pagePath":"pages/main/main.html","iconPath":"static/images/foot/dashen.png","selectedIconPath":"static/images/foot/dashen-selected.png","text":"大神"},{"pagePath":"pages/messagelist/messagelist.html","iconPath":"static/images/foot/message.png","selectedIconPath":"static/images/foot/message-selected.png","text":"消息"},{"pagePath":"pages/person/person.html","iconPath":"static/images/foot/personal.png","selectedIconPath":"static/images/foot/personal-selected.png","text":"个人"}],"position":"bottom"},"networkTimeout":{"request":60000,"connectSocket":60000,"uploadFile":60000,"downloadFile":60000},"platform":"devtools","pages":["pages/main/main","pages/index/index","pages/login/login","pages/register/register","pages/dashen/dashen","pages/laoban/laoban","pages/person/person","pages/personList/personList","pages/messagelist/messagelist","pages/message/message"],"nvueCompiler":"uni-app","renderer":"auto","splashscreen":{"alwaysShowBeforeRender":true,"autoclose":false},"compilerVersion":"2.3.7","usingComponents":{}}
+        </script>
+        <script>
+            var __id__ = '';
+            window.__dispatchGenerateFunc__ = function(page) {
+                __id__ = page;
+                document.title = page;
+                // window.history.pushState('', '', page);
+                var wxss = page.replace('.html', '.wxss')
+                if (
+                    typeof __wxAppCode__ !== 'undefined' &&
+                    __wxAppCode__.hasOwnProperty(wxss)
+                ) {
+                    var setCssToHead = __wxAppCode__[wxss]
+                    typeof setCssToHead === 'function' && setCssToHead()
+                    document.dispatchEvent(new CustomEvent("generateFuncReady", {
+                        detail: {
+                            generateFunc: $gwx(page.replace('.html', '.wxml'))
+                        }
+                    }));
+                } else {
+                    plus.webview.currentWebview().setJsFile('_www/' + page.replace('.html', '.js'));
+                }
+            };
+        </script>
+        <script src="__uniappes6.js"></script>
+        <script src="uniapp://ready"></script>
+    </head>
+
+    <body>
+        <div></div>
+    </body>
+
+</html>

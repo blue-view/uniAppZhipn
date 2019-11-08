@@ -17,12 +17,13 @@ export default {
 		if(userStr){
 			let user=JSON.parse(userStr);
 			this.initScoket(user._id)
-			// if(messageStr){
-			// 	let message=JSON.parse(messageStr);
-			// 	if(message.users.length==0){
-			// 		this.getMsgList(user._id)
-			// 	}
-			// }
+			if(messageStr){
+				let message=JSON.parse(messageStr);
+				if(Object.keys(message.users).length==0){
+					this.getMsgList(user._id)
+				}
+			}
+			
 		}
 	},
 	onHide: function() {
@@ -37,7 +38,5 @@ page {
 	/* position: fixed; */
 	height: 100%;
 	width: 100%;
-	background: #f5f5f9;
-	
 }
 </style>
